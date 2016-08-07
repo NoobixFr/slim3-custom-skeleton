@@ -7,6 +7,7 @@ $app = new \Slim\App([
     'settings' => [
 
         'displayErrorDetails' => true,
+        'addContentLengthHeader' => false,
 
         'db'       => [
             'driver'    => 'mysql',
@@ -34,7 +35,7 @@ $container['db'] =  function ($container) use ($capsule){
 };
 
 $container['view'] = function($container){
-    $view = new \Slim\Views\Twig(__DIR__.'/../app/resources/views',[
+    $view = new \Slim\Views\Twig(__DIR__ . '/../App/Resources/Views',[
         'cache' => false
     ]);
 
@@ -46,8 +47,19 @@ $container['view'] = function($container){
     return $view;
 };
 
+$container['validator'] = function($container){
+    return new \App\Validation\Validator;
+};
+
 $container['AppController'] = function($container){
     return new \App\Controllers\AppController($container);
 };
 
-require __DIR__ .'/../app/routes.php';
+$container['AuthController'] = function($container){
+    return new \App\Controllers\AuthController($container);
+};
+
+$app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
+$app->add(new \App\Middleware\OldInputMiddleware($container));
+
+require __DIR__ . '/../App/routes.php';
