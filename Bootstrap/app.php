@@ -1,4 +1,7 @@
 <?php
+
+use Respect\Validation\Validator as v;
+
 session_start();
 
 require __DIR__ .'/../vendor/autoload.php';
@@ -34,6 +37,11 @@ $container['db'] =  function ($container) use ($capsule){
     return $capsule;
 };
 
+$container['auth'] = function ($container){
+    return new \App\Auth\Auth();
+};
+
+
 $container['view'] = function($container){
     $view = new \Slim\Views\Twig(__DIR__ . '/../App/Resources/Views',[
         'cache' => false
@@ -42,6 +50,11 @@ $container['view'] = function($container){
     $view->addExtension(new \Slim\Views\TwigExtension(
         $container->router,
         $container->request->getUri()
+    ));
+
+    $view->getEnvironment()->addGlobal('auth', array(
+        'check' => $container->auth->check(),
+        'user' => $container->auth->user()
     ));
 
     return $view;
@@ -59,7 +72,16 @@ $container['AuthController'] = function($container){
     return new \App\Controllers\AuthController($container);
 };
 
+$container['csrf'] = function ($container){
+    return new \Slim\Csrf\Guard;
+};
+
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new \App\Middleware\OldInputMiddleware($container));
+$app->add(new \App\Middleware\CsrfViewMiddeware($container));
+
+$app->add($container->csrf);
+
+v::with('App\\Validation\\Rules');
 
 require __DIR__ . '/../App/routes.php';
