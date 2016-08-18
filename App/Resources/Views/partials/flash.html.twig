@@ -1,0 +1,28 @@
+{# App/Resources/Views/partials/flash.html.twig #}
+{% if flash.getMessage('success') %}
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ flash.getMessage('success') | first }}
+    </div>
+{% endif %}
+
+{% if flash.getMessage('info') %}
+    <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ flash.getMessage('info') | first }}
+    </div>
+{% endif %}
+
+{% if flash.getMessage('danger') %}
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ flash.getMessage('danger') | first }}
+    </div>
+{% endif %}
+
+{% if flash.getMessage('warning') %}
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ flash.getMessage('warning') | first }}
+    </div>
+{% endif %}

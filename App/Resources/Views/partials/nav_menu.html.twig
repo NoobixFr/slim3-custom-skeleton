@@ -1,4 +1,4 @@
-<!-- Fixed navbar -->
+{# App/Resources/Views/partials/nav_menu.html.twig #}
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -21,7 +21,7 @@
                             {{ auth.user.name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Change Password</a></li>
+                            <li><a href="{{  path_for('auth.password.change') }}">Change Password</a></li>
                             <li><a href="{{  path_for('auth.signout') }}">Sign Out</a></li>
                         </ul>
                     </li>

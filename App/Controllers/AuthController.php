@@ -22,6 +22,7 @@ class AuthController extends Controller
             ]);
 
         if($validation->failed()){
+            $this->flash->addMessage('danger', 'You can\'t signup');
             return $response->withRedirect($this->router->pathFor("auth.signup"));
         }
 
@@ -38,6 +39,8 @@ class AuthController extends Controller
             $request->getParam('password')
         );
 
+        $this->flash->addMessage('info', 'You\'re now registered and logged');
+
         return $response->withRedirect($this->router->pathFor("homepage"));
     }
 
@@ -53,9 +56,11 @@ class AuthController extends Controller
         );
 
         if(!$auth){
+            $this->flash->addMessage('danger', 'You can\'t signin');
             return $response->withRedirect($this->router->pathFor("auth.signin"));
         }
 
+        $this->flash->addMessage('info', 'You\'re now logged');
 
         return $response->withRedirect($this->router->pathFor("homepage"));
     }
@@ -66,4 +71,29 @@ class AuthController extends Controller
         return $response->withRedirect($this->router->pathFor("homepage"));
     }
 
+
+    public function getChangePassword($request, $response)
+    {
+        return $this->view->render($response, 'auth/changepassword.html.twig');
+    }
+
+    public function postChangePassword($request, $response)
+    {
+        $validation = $this->validator->validate($request, array(
+            'password_old' => v::noWhitespace()->notEmpty()->matchesPassword($this->auth->user()->password),
+            'password' => v::noWhitespace()->notEmpty()
+        ));
+
+        if($validation->failed()){
+            return $this->view->render($response, 'auth/changepassword.html.twig');
+        }
+
+        $this->auth->user()->setPassword($request->getParam('password'));
+
+        // flash
+        $this->flash->addMessage('info', 'Your password was changed');
+
+        // redirect
+        return $response->withRedirect($this->router->pathFor("homepage"));
+    }
 }
