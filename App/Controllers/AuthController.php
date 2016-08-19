@@ -1,5 +1,5 @@
 <?php
-
+// App/Controllers/AuthController.php
 namespace App\Controllers;
 
 use Respect\Validation\Validator as v;
@@ -8,11 +8,16 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-
+    /*
+     * Affiche le formulaire d'inscription
+     */
     public function getSignUp($request, $response){
         return $this->view->render($response, 'auth/signup.html.twig');
     }
 
+    /*
+     * Vérifie le formulaire d'inscription et connecte l'utilisateur
+     */
     public function postSignUp($request, $response){
 
         $validation = $this->validator->validate($request, [
@@ -44,10 +49,16 @@ class AuthController extends Controller
         return $response->withRedirect($this->router->pathFor("homepage"));
     }
 
+    /*
+     * Affiche le formulaire de connexion
+     */
     public function getSignIn($request, $response){
         return $this->view->render($response, 'auth/signin.html.twig');
     }
 
+    /*
+     * Vérifie le formulaire de connexion et connecte l'utilisateur
+     */
     public function postSignIn($request, $response)
     {
         $auth = $this->auth->attempt(
@@ -71,12 +82,17 @@ class AuthController extends Controller
         return $response->withRedirect($this->router->pathFor("homepage"));
     }
 
-
+    /*
+     * Affiche le formulaire de changement de mot de passe.
+     */
     public function getChangePassword($request, $response)
     {
         return $this->view->render($response, 'auth/changepassword.html.twig');
     }
 
+    /*
+     * Verifie le formulaire de changement de mot de passe et
+     */
     public function postChangePassword($request, $response)
     {
         $validation = $this->validator->validate($request, array(

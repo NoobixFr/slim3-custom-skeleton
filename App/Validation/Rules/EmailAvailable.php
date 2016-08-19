@@ -1,4 +1,5 @@
 <?php
+//App/Validation/Rules/EmailAvailable.php
 
 namespace App\Validation\Rules;
 

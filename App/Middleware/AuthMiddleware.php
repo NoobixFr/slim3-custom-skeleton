@@ -1,8 +1,12 @@
 <?php
-
+//App/Middleware/AuthMidlleware.php
 namespace App\Middleware;
 
-
+/**
+ * Permet de vérifier si un utilisateur est connecté
+ * Class AuthMiddleware
+ * @package App\Middleware
+ */
 class AuthMiddleware extends Middleware
 {
     public function __invoke($request, $response, $next)

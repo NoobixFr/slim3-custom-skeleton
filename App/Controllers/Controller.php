@@ -1,5 +1,5 @@
 <?php
-
+//App/Controllers/Controller
 namespace App\Controllers;
 
 class Controller

@@ -1,4 +1,5 @@
 <?php
+//App/Validation/Exceptions/EmailAvailableException.php
 
 namespace App\Validation\Exceptions;
 

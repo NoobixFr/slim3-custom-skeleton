@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Noobix
- * Date: 06/08/2016
- * Time: 18:02
- */
+//App/Validation/Validator.php
 
 namespace App\Validation;
 

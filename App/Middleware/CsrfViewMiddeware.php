@@ -1,8 +1,12 @@
 <?php
-
+//App/Middleware/CsrfMidlleware.php
 namespace App\Middleware;
 
-
+/**
+ * Permet d'implementer facilement les inputs de protection dans un vue
+ * Class CsrfViewMiddeware
+ * @package App\Middleware
+ */
 class CsrfViewMiddeware extends Middleware
 {
     public function __invoke($request, $response, $next)
